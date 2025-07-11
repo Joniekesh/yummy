@@ -4,7 +4,6 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import AddressForm from "./AddressForm";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -49,7 +48,6 @@ const CheckoutForm = () => {
   return (
     <form className="form" id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      {/* <AddressForm /> */}
       <button
         disabled={isLoading || !stripe || !elements}
         id="submit"

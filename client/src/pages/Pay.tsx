@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import getUser from "../utils/getUser";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { loadStripe, type Appearance } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
