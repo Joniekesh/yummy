@@ -13,7 +13,7 @@ const CompletePage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const hasRun = useRef(false); // Prevent multiple runs
+  const hasRun = useRef(false);
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -28,7 +28,7 @@ const CompletePage = () => {
       return;
     }
 
-    hasRun.current = true; // Mark as run
+    hasRun.current = true;
 
     const updateOrder = async () => {
       setLoading(true);
