@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import makeRequest from "../../utils/makeRequest";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
@@ -40,8 +40,6 @@ const columns = [
 const MyOrder = () => {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
-
-  const queryClient = useQueryClient();
 
   const fetchOrder = async () => {
     try {

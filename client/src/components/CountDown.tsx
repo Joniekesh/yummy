@@ -1,23 +1,6 @@
 import Countdown from "react-countdown";
 
 const CountDown = () => {
-  const Completionist = () => <span>You are good to go!</span>;
-
-  // Renderer callback with condition
-  // const renderer = ({ hours, minutes, seconds, completed }) => {
-  //   if (completed) {
-  //     // Render a completed state
-  //     return <Completionist />;
-  //   } else {
-  //     // Render a countdown
-  //     return (
-  //       <span>
-  //         {hours}:{minutes}:{seconds}
-  //       </span>
-  //     );
-  //   }
-  // };
-
   return (
     <div className="flex-col w-full py-4 px-4 sm:px-10 bg-black text-white flex sm:flex-row items-center justify-center gap-4">
       <div className="flex flex-col gap-4">
@@ -29,8 +12,7 @@ const CountDown = () => {
           deleniti nisi adipisci eligendi cupiditate, sint dolorum,
         </p>
         <Countdown
-          date={Date.now() + 10000}
-          // renderer={renderer}
+          date={Date.now() + 500000000}
           className="text-orange-400 text-[30px] font-bold"
         />
         <div className="flex self-start bg-red-500 text-white p-[5px] cursor-pointer rouded-md text-base">

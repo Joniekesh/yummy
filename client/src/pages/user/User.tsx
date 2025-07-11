@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import getUser from "../../utils/getUser";
 import makeRequest from "../../utils/makeRequest";
 import DataTable from "react-data-table-component";
-import { FcFullTrash } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
 const columns = [
@@ -89,8 +88,6 @@ const User = () => {
       ),
     };
   });
-
-  console.log(orders);
 
   return (
     <div className="flex flex-col gap-6 p-4">
