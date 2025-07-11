@@ -46,23 +46,29 @@ const Foods = () => {
           <div className="flex flex-col gap-4 px-4">
             <div className="text-3xl text-red-500">Yummy Categories</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {categories?.map((cat: ICategory) => (
-                <Link
-                  key={cat._id}
-                  to={`/foods/category?cat=${cat.slug}`}
-                  state={cat}
-                  className="relative rounded-[10px] h-[300px] overflow-hidden cursor-pointer hover:bg-red-500"
-                >
-                  <img
-                    className="w-[100%] h-[100%] object-cover"
-                    src={cat.thumbnail}
-                    alt=""
-                  />
-                  <div className="absolute top-[10px] left-[10px] bg-amber-200 p-[4px] rounded-[5px]">
-                    {cat.name}
-                  </div>
-                </Link>
-              ))}
+              {Array.isArray(categories) ? (
+                categories.map((cat: ICategory) => (
+                  <Link
+                    key={cat._id}
+                    to={`/foods/category?cat=${cat.slug}`}
+                    state={cat}
+                    className="relative rounded-[10px] h-[300px] overflow-hidden cursor-pointer hover:bg-red-500"
+                  >
+                    <img
+                      className="w-[100%] h-[100%] object-cover"
+                      src={cat.thumbnail}
+                      alt=""
+                    />
+                    <div className="absolute top-[10px] left-[10px] bg-amber-200 p-[4px] rounded-[5px]">
+                      {cat.name}
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-center text-red-500 text-lg">
+                  Failed to load categories
+                </div>
+              )}
             </div>
           </div>
           <CountDown />
