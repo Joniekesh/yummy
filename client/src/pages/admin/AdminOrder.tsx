@@ -27,6 +27,11 @@ const columns = [
     selector: (row: any) => row.desc,
   },
   {
+    name: "Qty",
+    // sortable: true,
+    selector: (row: any) => row.qty,
+  },
+  {
     name: "Price ($)",
     // sortable: true,
     selector: (row: any) => row.price,
@@ -82,6 +87,7 @@ const AdminOrder = () => {
         ),
         name: product.name,
         desc: product.desc,
+        qty: product.qty,
         price: (
           <div className="font-medium text-red-400">
             {product.price.toFixed(2)}

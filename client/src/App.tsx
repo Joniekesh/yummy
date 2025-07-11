@@ -38,6 +38,7 @@ import AdminOrder from "./pages/admin/AdminOrder";
 import AdminUser from "./pages/admin/AdminUser";
 import AdminCategory from "./pages/admin/AdminCategory";
 import AdminProduct from "./pages/admin/AdminProduct";
+import MyOrder from "./pages/user/MyOrder";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const App = () => {
@@ -142,6 +143,14 @@ const App = () => {
           element: (
             <Private>
               <User />
+            </Private>
+          ),
+        },
+        {
+          path: "orders/:id",
+          element: (
+            <Private>
+              <MyOrder />
             </Private>
           ),
         },

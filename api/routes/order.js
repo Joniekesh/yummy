@@ -5,6 +5,7 @@ import {
   confirmOrder,
   createOrder,
   deleteOrder,
+  getMyOrders,
   getOrder,
   getOrders,
   updateOrder,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.post("/", verifyToken, createOrder);
 router.get("/", verifyToken, admin, getOrders);
+router.get("/me", verifyToken, getMyOrders);
 router.get("/find/:id", verifyToken, getOrder);
 router.put("/confirm/:paymentIntent", verifyToken, confirmOrder);
 router.put("/:id", verifyToken, admin, updateOrder);

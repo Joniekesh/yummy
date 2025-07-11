@@ -78,6 +78,25 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
+// @desc   get all orders
+// @route  GET /api/orders/me
+// @access Private
+export const getMyOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ user: req.user.id })
+      .populate("user")
+      .sort({ createdAt: -1 });
+
+    if (orders.length < 1) {
+      return next(createError(400, "Orders not found. Please try again."));
+    }
+
+    return res.status(201).json(orders);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // @desc   get single order
 // @route  GET /api/orders/id
 // @access Private

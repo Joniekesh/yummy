@@ -37,10 +37,6 @@ const Navbar = () => {
     }
   };
 
-  const handleclick = () => {
-    navigate("/auth?redirect=/foods");
-  };
-
   return (
     <div className="w-full h-15 px-4 flex items-center justify-between text-[20px] fixed top-0 left-0 z-900 bg-red-300">
       {open && <Menu setOpen={setOpen} setOpenCart={setOpenCart} />}
@@ -69,7 +65,7 @@ const Navbar = () => {
           {user ? (
             <div className="flex items-center justify-center gap-[10px]">
               <Link
-                to="/admin"
+                to={`/${user.role}`}
                 className="py-1 px-2 rounded-sm bg-red-500 text-white"
               >
                 Dashboard
