@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import makeRequest from "../utils/makeRequest";
 import { toast } from "sonner";
 import { auth, provider, signInWithPopup } from "../firebase";
-import getUser from "../utils/getUser";
 
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
