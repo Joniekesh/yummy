@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { adminMenulinks } from "../../mockData";
 import type { INavLink } from "../../interfaces";
-import { logout } from "../../redux/actions/authaction";
+import { logout } from "../../redux/actions/authActiontem";
 import { useAppDispatch } from "../../redux/hooks";
 
 const AdminMenu = () => {

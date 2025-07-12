@@ -9,7 +9,7 @@ import { FaCartPlus } from "react-icons/fa";
 import Menu from "./Menu";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Cart from "./Cart";
-import { logout } from "../redux/actions/authaction";
+import { logout } from "../redux/actions/authActiontem";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

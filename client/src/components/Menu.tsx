@@ -2,7 +2,8 @@ import { links } from "../mockData";
 import { Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { logout } from "../redux/actions/authaction";
+import { logout } from "../redux/actions/authActiontem";
+
 interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,10 +16,6 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
 
   const auth = useAppSelector((state) => state.auth);
   const user = auth?.user;
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
 
   return (
     <div className="fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-999999 w-full h-full">
@@ -59,7 +56,7 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
 
             <div
               className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-red-400  hover:scale-[1.01]"
-              onClick={handleLogout}
+              onClick={() => dispatch(logout())}
             >
               Logout
             </div>
