@@ -1,124 +1,126 @@
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import makeRequest from "../utils/makeRequest";
 import { toast } from "sonner";
 import { auth, provider, signInWithPopup } from "../firebase";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} from "../redux/reducers/authReducers";
 
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
+  const navigate = useNavigate();
+
+  // form fields
   const [email, setEmail] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [fullName, setFullName] = useState("");
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [googleLoading, setGoogleLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user } = useAppSelector((state) => state.auth);
 
-  const redirect = location.search.split("=")[1];
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
 
+  const { loading: loadingLogin } = useAppSelector((state) => state.auth);
   const isSignupFormIncomplete =
     !fullName || !registerEmail || !confirmPassword || !registerPassword;
 
   const isSigninFormIncomplete = !email || !password;
 
+  const handleLogin = async () => {
+    dispatch(loginRequest());
+    try {
+      const res: any = await makeRequest.post("/auth/login", {
+        email,
+        password,
+      });
+      dispatch(loginSuccess(res.data));
+      toast.success("Login successful");
+      navigate(`/${res.data.role}`);
+    } catch (error: any) {
+      dispatch(loginFailure(error?.response?.data?.message || "Login failed"));
+      toast.error("Login failed");
+    }
+  };
+
+  const handleRegister = async () => {
+    if (registerPassword !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
+    const data = {
+      email: registerEmail,
+      password: registerPassword,
+      fullName,
+    };
+
+    setLoading(true);
+
+    try {
+      const res: any = await makeRequest.post("/auth", data);
+
+      if (res.status === 201) {
+        toast.success("Registration successful!");
+        setIsRegister(false);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  // 🔄 Handle login or register
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isRegister) {
-      if (
-        !registerEmail ||
-        !registerPassword ||
-        !confirmPassword ||
-        !fullName
-      ) {
-        return toast.error("all fields are required.");
-      }
-
-      if (registerPassword !== confirmPassword) {
-        return toast.error("Passwords do not match.");
-      }
-
-      const data = {
-        email: registerEmail,
-        password: registerPassword,
-        fullName,
-      };
-      setLoading(true);
-      try {
-        const res: any = await makeRequest.post("/auth", data);
-
-        if (res.status === 201) {
-          toast.success(res.data);
-          setIsRegister(false);
-        }
-        setLoading(false);
-      } catch (error: any) {
-        console.log(error);
-        toast.error(error.response.data);
-        setLoading(false);
-      }
+      handleRegister();
     } else {
-      if (!email || !password) {
-        return toast.error("email and password are required.");
-      }
-      setLoading(true);
-
-      try {
-        const res: any = await makeRequest.post("/auth/login", {
-          email,
-          password,
-        });
-
-        if (res.status === 200) {
-          if (redirect) {
-            navigate(redirect);
-          } else {
-            navigate(`/${res.data.role}`);
-          }
-
-          toast.success("login successful");
-          localStorage.setItem("user", JSON.stringify(res.data));
-        }
-        setLoading(false);
-
-        console.log(res);
-      } catch (error: any) {
-        console.log(error);
-        toast.error(error.response.data);
-        setLoading(false);
-      }
+      handleLogin();
     }
   };
 
+  //  Google Sign-In
   const handleGoogleSignIn = async () => {
     if (googleLoading) return;
-
     setGoogleLoading(true);
 
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      toast.success(`Welcome ${user.displayName}`);
-      console.log("User:", user);
+      // Send to backend to create/login user
+      const res: any = await makeRequest.post("/auth/google", {
+        email: user.email,
+        fullName: user.displayName,
+        photoURL: user.photoURL,
+      });
 
-      // localStorage.setItem("user", JSON.stringify(user));
-      // navigate("/"); // Navigate after success
+      if (res.status === 200) {
+        toast.success(`Welcome ${res.data.fullName}`);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate(`/${res.data.role}`);
+      }
     } catch (error: any) {
       if (error.code === "auth/cancelled-popup-request") {
-        toast.warning("Sign-in cancelled due to another request.");
+        toast.warning("Google login cancelled.");
       } else {
-        toast.error("Google Sign-In failed");
+        toast.error("Google login failed.");
         console.error(error);
       }
-      console.error(error);
     } finally {
       setGoogleLoading(false);
     }
@@ -126,137 +128,117 @@ const Auth = () => {
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-red-300">
-      <div className="h-[max-content] bg-white m-[10px] rounded-lg w-[90vh] p-[16px] flex flex-col gap-2">
-        <div className="w-full flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow w-[90%] max-w-md">
+        <div className="flex justify-center mb-4">
           <Link
-            className="py-1 px-2 font-bold rounded-sm bg-red-500 text-white"
+            className="text-lg font-bold bg-red-500 text-white px-3 py-1 rounded"
             to="/"
           >
-            Yummy
+            Yummy Kitchen
           </Link>
         </div>
 
-        <div className="text-center text-2xl">
+        <div className="text-center text-2xl mb-4">
           {isRegister ? "Register" : "Login"}
         </div>
-        <div className="flex items-center justify-between gap-[20px]">
-          <div
-            className={`${
-              isRegister ? "bg-red-500 text-white" : ""
-            } font-base px-4 py-0.5 cursor-pointer ring ring-[#ddd] rounded-2xl`}
+
+        <div className="flex justify-between mb-4">
+          <button
+            className={`cursor-pointer w-1/2 py-2 rounded-l ${
+              isRegister ? "bg-red-500 text-white" : "bg-gray-200"
+            }`}
             onClick={() => setIsRegister(true)}
           >
             Sign Up
-          </div>
-          <div
-            className={`${
-              !isRegister ? "bg-red-500 text-white" : ""
-            } font-base px-4 py-0.5 cursor-pointer ring ring-[#ddd] rounded-2xl`}
+          </button>
+          <button
+            className={`cursor-pointer w-1/2 py-2 rounded-r ${
+              !isRegister ? "bg-red-500 text-white" : "bg-gray-200"
+            }`}
             onClick={() => setIsRegister(false)}
           >
             Sign In
-          </div>
+          </button>
         </div>
-        {isRegister ? (
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-1">
-              <label>Full Name</label>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {isRegister ? (
+            <>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="text"
-                placeholder="Enter email"
+                placeholder="Full Name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Email</label>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="email"
-                placeholder="Enter email"
+                placeholder="Email"
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Password</label>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Password"
                 value={registerPassword}
                 onChange={(e) => setRegisterPassword(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Confirm Password</label>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <button
-              className={`bg-red-500 text-white p-[10px] cursor-pointer rounded-[5px] ${
-                isSignupFormIncomplete && "opacity-50 cursor-not-allowed"
-              }`}
-              type="submit"
-              disabled={isSignupFormIncomplete}
-            >
-              {loading ? "Loading..." : "Sign Up"}
-            </button>
-            <div className="text-center">or</div>
-            <div
-              className="ring text-center ring-red-500  rounded-[5px] cursor-pointer p-[10px]
-            "
-              onClick={handleGoogleSignIn}
-            >
-              Sign In with Google
-            </div>
-          </form>
-        ) : (
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-1">
-              <label>Email</label>
+              <button
+                type="submit"
+                disabled={isSignupFormIncomplete || loading}
+                className={`cursor-pointer w-full py-2 rounded text-white ${
+                  isSignupFormIncomplete ? "bg-gray-300" : "bg-red-500"
+                }`}
+              >
+                {loading ? "Registering..." : "Sign Up"}
+              </button>
+            </>
+          ) : (
+            <>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="email"
-                placeholder="Enter email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Password</label>
               <input
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
               />
-            </div>
-            <button
-              className={`bg-red-500 text-white p-[10px] cursor-pointer rounded-[5px] ${
-                isSigninFormIncomplete && "opacity-50 cursor-not-allowed"
-              }`}
-              type="submit"
-              disabled={isSigninFormIncomplete}
-            >
-              {loading ? "Loading..." : "  Sign In"}
-            </button>
-            <div className="text-center">or</div>
-            <div
-              className="ring text-center ring-red-500  rounded-[5px] cursor-pointer p-[10px]"
-              onClick={handleGoogleSignIn}
-            >
-              Sign In with Google
-            </div>
-          </form>
-        )}
+              <button
+                type="submit"
+                disabled={isSigninFormIncomplete || loadingLogin}
+                className={`cursor-pointer w-full py-2 rounded text-white ${
+                  isSigninFormIncomplete ? "bg-gray-300" : "bg-red-500"
+                }`}
+              >
+                {loadingLogin ? "Signing In..." : "Sign In"}
+              </button>
+            </>
+          )}
+        </form>
+
+        <div className="text-center mt-4 text-sm text-gray-500">or</div>
+
+        <button
+          onClick={handleGoogleSignIn}
+          className="cursor-pointer w-full mt-3 py-2 border border-red-500 text-red-500 rounded hover:bg-red-50"
+        >
+          {googleLoading ? "Connecting..." : "Sign in with Google"}
+        </button>
       </div>
     </div>
   );

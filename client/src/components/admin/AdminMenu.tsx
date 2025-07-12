@@ -1,28 +1,18 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { adminMenulinks } from "../../mockData";
 import type { INavLink } from "../../interfaces";
-import makeRequest from "../../utils/makeRequest";
+import { logout } from "../../redux/actions/authaction";
+import { useAppDispatch } from "../../redux/hooks";
 
 const AdminMenu = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const logout = async () => {
-    try {
-      const res = await makeRequest.post("/auth/logout");
-
-      if (res.status === 200) {
-        localStorage.setItem("user", "");
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useAppDispatch();
 
   const handleNavigate = (link: INavLink) => {
     if (link.name === "Logout") {
-      logout();
+      dispatch(logout());
     } else {
       navigate(link.url);
     }

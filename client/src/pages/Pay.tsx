@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import getUser from "../utils/getUser";
 import { useLocation, useNavigate } from "react-router-dom";
 import { loadStripe, type Appearance } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
+import { useAppSelector } from "../redux/hooks";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Pay = () => {
-  const user = getUser();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
   const navigate = useNavigate();
 
   const {

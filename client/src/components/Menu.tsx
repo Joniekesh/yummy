@@ -1,41 +1,23 @@
 import { links } from "../mockData";
-import { Link, useNavigate } from "react-router-dom";
-import makeRequest from "../utils/makeRequest";
+import { Link } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { logout } from "../redux/actions/authaction";
 interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Menu = ({ setOpen, setOpenCart }: Props) => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const { quantity } = useAppSelector((state) => state.cart);
 
-  let user = null;
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
 
-  try {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      user = JSON.parse(userString);
-    }
-  } catch (error) {
-    console.error("Failed to parse user from localStorage:", error);
-    user = null;
-  }
-
-  const logout = async () => {
-    try {
-      const res = await makeRequest.post("/auth/logout");
-
-      if (res.status === 200) {
-        localStorage.setItem("user", "");
-        setOpen((prev) => !prev);
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -77,7 +59,7 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
 
             <div
               className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-red-400  hover:scale-[1.01]"
-              onClick={logout}
+              onClick={handleLogout}
             >
               Logout
             </div>

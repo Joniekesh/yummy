@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import getUser from "../../utils/getUser";
 import makeRequest from "../../utils/makeRequest";
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
 
 const columns = [
   { name: "SN", selector: (row: any) => row.sn },
@@ -20,7 +20,9 @@ const columns = [
 
 const User = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const user = getUser();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
+
   const navigate = useNavigate();
 
   const fetchMyOrders = async () => {
@@ -109,14 +111,14 @@ const User = () => {
             />
             <div className="text-lg text-gray-700">
               <strong className="text-gray-500">Full Name:</strong>{" "}
-              {user.fullName}
+              {user?.fullName}
             </div>
             <div className="text-lg text-gray-700">
-              <strong className="text-gray-500">Email:</strong> {user.email}
+              <strong className="text-gray-500">Email:</strong> {user?.email}
             </div>
             <div className="text-lg text-gray-700">
               <strong className="text-gray-500">Authentication Type:</strong>{" "}
-              {user.authType}
+              {user?.authType}
             </div>
           </div>
 

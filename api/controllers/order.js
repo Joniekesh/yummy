@@ -78,12 +78,12 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
-// @desc   get all orders
+// @desc   get my orders
 // @route  GET /api/orders/me
 // @access Private
 export const getMyOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find({ user: req.user.id })
+    const orders = await Order.find({ user: req.user._id })
       .populate("user")
       .sort({ createdAt: -1 });
 

@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import makeRequest from "../utils/makeRequest";
-import getUser from "../utils/getUser";
 import { useState } from "react";
 
 interface Props {
@@ -19,7 +18,8 @@ const Cart = ({ setOpenCart }: Props) => {
     (state) => state.cart
   );
 
-  const user = getUser();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

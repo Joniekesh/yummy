@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { clearCart } from "../redux/reducers/cartReducers";
-import { useAppDispatch } from "../redux/hooks";
-import getUser from "../utils/getUser";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import makeRequest from "../utils/makeRequest";
 import "../App.css";
 
 const CompletePage = () => {
   const [loading, setLoading] = useState(false);
-  const user = getUser();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -40,7 +40,7 @@ const CompletePage = () => {
         if (res.status === 200) {
           toast.success(res.data);
           dispatch(clearCart());
-          navigate(`/${user.role}`);
+          navigate(`/${user?.role}`);
         }
       } catch (error: any) {
         toast.error(error?.response?.data || "Something went wrong");
@@ -50,7 +50,7 @@ const CompletePage = () => {
     };
 
     updateOrder();
-  }, [navigate, dispatch, user.role]);
+  }, [navigate, dispatch, user?.role]);
 
   return (
     loading && (

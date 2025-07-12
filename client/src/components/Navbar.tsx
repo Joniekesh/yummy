@@ -1,41 +1,25 @@
 import { useState } from "react";
 import { FaHamburger } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LinkItem from "./LinkItem";
 import type { INavLink } from "../interfaces";
 import { links } from "../mockData";
 import { FaCartPlus } from "react-icons/fa";
 import Menu from "./Menu";
-import makeRequest from "../utils/makeRequest";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Cart from "./Cart";
-import getUser from "../utils/getUser";
-import { clearCart } from "../redux/reducers/cartReducers";
+import { logout } from "../redux/actions/authaction";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const { quantity } = useAppSelector((state) => state.cart);
 
-  const user = getUser();
+  const auth = useAppSelector((state) => state.auth);
+  const user = auth?.user;
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const logout = async () => {
-    try {
-      const res = await makeRequest.post("/auth/logout");
-
-      if (res.status === 200) {
-        localStorage.setItem("user", "");
-        dispatch(clearCart());
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="w-full h-15 px-4 flex items-center justify-between text-[20px] fixed top-0 left-0 z-900 bg-red-300">
@@ -46,7 +30,7 @@ const Navbar = () => {
         to="/"
         className="py-1 px-2 font-bold rounded-sm bg-red-500 text-white"
       >
-        Yummy
+        Yummy Kitchen
       </Link>
       <div className="flex items-center gap-2">
         <div className="hidden sm:flex items-center gap-2 text-lg cursor-pointer">
@@ -72,7 +56,7 @@ const Navbar = () => {
               </Link>
 
               <div
-                onClick={logout}
+                onClick={() => dispatch(logout())}
                 className="py-1 px-2 rounded-sm bg-red-500 text-white"
               >
                 Logout

@@ -26,7 +26,6 @@ import Products from "./pages/admin/Products";
 import Orders from "./pages/admin/Orders";
 import Users from "./pages/admin/Users";
 import Categories from "./pages/admin/Categories";
-import getUser from "./utils/getUser";
 import Pay from "./pages/Pay";
 import UserHeader from "./components/user/UserHeader";
 import User from "./pages/user/User";
@@ -39,10 +38,11 @@ import AdminUser from "./pages/admin/AdminUser";
 import AdminCategory from "./pages/admin/AdminCategory";
 import AdminProduct from "./pages/admin/AdminProduct";
 import MyOrder from "./pages/user/MyOrder";
+import { useAppSelector } from "./redux/hooks";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const App = () => {
-  const user = getUser();
+  const { user } = useAppSelector((state) => state.auth);
 
   const Private = ({ children }: { children: React.ReactNode }) => {
     return user ? children : <Navigate to="/auth" />;
@@ -61,7 +61,7 @@ const App = () => {
   };
 
   const AdminLayout = () => {
-    return (
+    return user?.role === "admin" ? (
       <div className="flex h-screen w-full">
         <AdminMenu />
         <div className="flex-8 flex flex-col overflow-y-auto">
@@ -69,6 +69,8 @@ const App = () => {
           <Outlet />
         </div>
       </div>
+    ) : (
+      <Navigate to="/" />
     );
   };
 
