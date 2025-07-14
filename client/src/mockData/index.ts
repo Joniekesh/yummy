@@ -1,4 +1,4 @@
-import type { INavLink, ICategory, IAdminLink, ICard } from "../interfaces";
+import type { INavLink, IAdminLink, ICard } from "../interfaces";
 import { MdDashboard, MdCategory } from "react-icons/md";
 import { SiSimpleanalytics } from "react-icons/si";
 import { FaUsers, FaCartPlus } from "react-icons/fa";
@@ -98,36 +98,5 @@ export const adminCards: ICard[] = [
     url: "/admin/products",
     count: 890,
     icon: LuPizza,
-  },
-];
-
-export const categories: ICategory[] = [
-  {
-    _id: "1",
-    name: "Juicy Burgers",
-    slug: "burger",
-    thumbnail: "/burger10.jpg",
-    desc: "yummy burger",
-  },
-  {
-    _id: "2",
-    name: "Yummy Sandwiches",
-    slug: "sandwich",
-    thumbnail: "/sw1.jpg",
-    desc: "yummy sandwich",
-  },
-  {
-    _id: "3",
-    name: "Cheezy Pizzas",
-    slug: "pizza",
-    thumbnail: "/pizza3.jpg",
-    desc: "yummy pizza",
-  },
-  {
-    _id: "4",
-    name: "Crunchy French Fries",
-    slug: "frenchfry",
-    thumbnail: "/ff1.jpg",
-    desc: "yummy french fry",
   },
 ];
