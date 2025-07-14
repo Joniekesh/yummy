@@ -182,7 +182,19 @@ export const signInGoogle = async (req, res, next) => {
         email,
         fullName,
         googleId,
+        authType: "google",
       });
+
+      const user = await User.findOne({ email: newUser.email });
+
+      if (user) {
+        return next(
+          createError(
+            400,
+            "An email associated with this google account already exists. Please use another email."
+          )
+        );
+      }
 
       const savedUser = await newUser.save();
 

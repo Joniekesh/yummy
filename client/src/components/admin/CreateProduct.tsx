@@ -10,9 +10,17 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface IOption {
+  name: string;
+  price: number;
+}
+
 const Createproduct = ({ setOpen }: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [options, setOptions] = useState<IOption[]>([]);
+  const [optionName, setOptionName] = useState("");
+  const [optionPrice, setOptionPrice] = useState<number>();
 
   const [inputs, setInputs] = useState({
     name: "",
@@ -24,12 +32,24 @@ const Createproduct = ({ setOpen }: Props) => {
   const { name, desc, category, price } = inputs;
   const isFormIncomplete = !name || !desc || !category || !price || !file;
 
+  console.log(options);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleAddOption = () => {
+    if (!optionName || !optionPrice) {
+      return toast.error("please provide option name and price in the inputs.");
+    }
+
+    setOptions([{ name: optionName, price: optionPrice }, ...options]);
+    setOptionName("");
+    setOptionPrice(1);
   };
 
   const queryClient = useQueryClient();
@@ -50,9 +70,7 @@ const Createproduct = ({ setOpen }: Props) => {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!name || !desc || !category || !price || !file) {
       return toast.error("All fields are required");
     }
@@ -66,6 +84,7 @@ const Createproduct = ({ setOpen }: Props) => {
 
     const data = {
       ...inputs,
+      options,
       image: url,
     };
 
@@ -102,7 +121,7 @@ const Createproduct = ({ setOpen }: Props) => {
         />
         <div className="text-[30px]">Create Product</div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => e.preventDefault()}
           className="flex p-3 w-full flex-col gap-4 overflow-y-auto"
         >
           <div className="flex flex-col gap-[5px] w-full">
@@ -188,8 +207,64 @@ const Createproduct = ({ setOpen }: Props) => {
               type="number"
               name="price"
               value={price}
+              min={1}
               onChange={handleChange}
             />
+          </div>
+          <div className="flex flex-col gap-[5px] w-full ">
+            <label>Options</label>
+            <div className="flex flex-wrap gap-3">
+              {options &&
+                options.map((item) => (
+                  <div className="flex items-center gap-5 ring-1 ring-red-500 p-1 cursor-pointer rounded-[5px]">
+                    <span>{item.name}</span>
+                    <span>${item.price.toFixed(2)}</span>
+                    <IoIosCloseCircleOutline
+                      onClick={() =>
+                        setOptions(
+                          options.filter((option) => option.name !== item.name)
+                        )
+                      }
+                      className=" text-red-500 cursor-pointer"
+                    />
+                  </div>
+                ))}
+            </div>
+
+            <div className="flex flex-col gap-3 ring-1 ring-[#ddd] p-2 rounded-[5px]">
+              <div className="flex items-center justify-between gap-2 w-full">
+                <div className="flex flex-col gap-1 w-1/2">
+                  <label className="text-[14px] text-gray-500">
+                    Option Name
+                  </label>
+                  <input
+                    className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                    type="text"
+                    placeholder="e.g small,medium,big"
+                    value={optionName}
+                    onChange={(e) => setOptionName(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-1 w-1/2">
+                  <label className="text-[14px] text-gray-500">
+                    Option Price
+                  </label>
+                  <input
+                    className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                    type="number"
+                    value={optionPrice}
+                    min={1}
+                    onChange={(e) => setOptionPrice(Number(e.target.value))}
+                  />
+                </div>
+              </div>
+              <button
+                onClick={handleAddOption}
+                className="flex self-end items-center justify-center bg-red-500 text-white p-[5px] cursor-pointer rounded-[5px] w-[100px] text-center"
+              >
+                Add
+              </button>
+            </div>
           </div>
           <button
             className={`bg-red-500 text-white p-[10px] cursor-pointer rounded-[5px] ${
@@ -198,6 +273,7 @@ const Createproduct = ({ setOpen }: Props) => {
             }`}
             type="submit"
             disabled={isFormIncomplete || mutation.isPending}
+            onClick={handleSubmit}
           >
             {mutation.isPending
               ? "Creating Product..."

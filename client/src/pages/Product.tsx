@@ -12,6 +12,10 @@ const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const { id } = useParams<{ id: string }>();
   const [errorMessage, setErrorMessage] = useState("");
+  const [option, setOption] = useState({
+    name: "",
+    price: "",
+  });
 
   const dispatch = useAppDispatch();
 

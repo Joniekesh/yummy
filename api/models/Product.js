@@ -29,6 +29,16 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    options: [
+      {
+        name: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import makeRequest from "../utils/makeRequest";
 import { toast } from "sonner";
 import { auth, provider, signInWithPopup } from "../firebase";
@@ -9,6 +9,7 @@ import {
   loginRequest,
   loginSuccess,
 } from "../redux/reducers/authReducers";
+import Logo from "../components/Logo";
 
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
@@ -102,40 +103,38 @@ const Auth = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
+      console.log(user);
+
       // Send to backend to create/login user
       const res: any = await makeRequest.post("/auth/google", {
         email: user.email,
         fullName: user.displayName,
-        photoURL: user.photoURL,
+        googleId: user.uid,
       });
 
       if (res.status === 200) {
+        dispatch(loginSuccess(res.data));
         toast.success(`Welcome ${res.data.fullName}`);
-        localStorage.setItem("user", JSON.stringify(res.data));
         navigate(`/${res.data.role}`);
       }
     } catch (error: any) {
       if (error.code === "auth/cancelled-popup-request") {
         toast.warning("Google login cancelled.");
       } else {
-        toast.error("Google login failed.");
+        toast.error(error.response.data);
         console.error(error);
       }
+      console.error(error);
     } finally {
       setGoogleLoading(false);
     }
   };
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-red-300">
+    <div className="h-screen w-screen flex items-center justify-center bg-[#D99703]">
       <div className="bg-white p-6 rounded-lg shadow w-[90%] max-w-md">
         <div className="flex justify-center mb-4">
-          <Link
-            className="text-lg font-bold bg-red-500 text-white px-3 py-1 rounded"
-            to="/"
-          >
-            Yummy Kitchen
-          </Link>
+          <Logo />
         </div>
 
         <div className="text-center text-2xl mb-4">
@@ -145,7 +144,7 @@ const Auth = () => {
         <div className="flex justify-between mb-4">
           <button
             className={`cursor-pointer w-1/2 py-2 rounded-l ${
-              isRegister ? "bg-red-500 text-white" : "bg-gray-200"
+              isRegister ? "bg-[#D99703] text-white" : "bg-gray-200"
             }`}
             onClick={() => setIsRegister(true)}
           >
@@ -153,7 +152,7 @@ const Auth = () => {
           </button>
           <button
             className={`cursor-pointer w-1/2 py-2 rounded-r ${
-              !isRegister ? "bg-red-500 text-white" : "bg-gray-200"
+              !isRegister ? "bg-[#D99703] text-white" : "bg-gray-200"
             }`}
             onClick={() => setIsRegister(false)}
           >
@@ -169,34 +168,34 @@ const Auth = () => {
                 placeholder="Full Name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <input
                 type="email"
                 placeholder="Email"
                 value={registerEmail}
                 onChange={(e) => setRegisterEmail(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <input
                 type="password"
                 placeholder="Password"
                 value={registerPassword}
                 onChange={(e) => setRegisterPassword(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <input
                 type="password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <button
                 type="submit"
                 disabled={isSignupFormIncomplete || loading}
                 className={`cursor-pointer w-full py-2 rounded text-white ${
-                  isSignupFormIncomplete ? "bg-gray-300" : "bg-red-500"
+                  isSignupFormIncomplete ? "bg-gray-300" : "bg-[#D99703]"
                 }`}
               >
                 {loading ? "Registering..." : "Sign Up"}
@@ -209,20 +208,20 @@ const Auth = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 w-full"
+                className="ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[#D99703] w-full"
               />
               <button
                 type="submit"
                 disabled={isSigninFormIncomplete || loadingLogin}
                 className={`cursor-pointer w-full py-2 rounded text-white ${
-                  isSigninFormIncomplete ? "bg-gray-300" : "bg-red-500"
+                  isSigninFormIncomplete ? "bg-gray-300" : "bg-[#D99703]"
                 }`}
               >
                 {loadingLogin ? "Signing In..." : "Sign In"}
@@ -235,7 +234,7 @@ const Auth = () => {
 
         <button
           onClick={handleGoogleSignIn}
-          className="cursor-pointer w-full mt-3 py-2 border border-red-500 text-red-500 rounded hover:bg-red-50"
+          className="cursor-pointer w-full mt-3 py-2 border border-[#D99703] text-[#D99703] rounded hover:bg-red-50"
         >
           {googleLoading ? "Connecting..." : "Sign in with Google"}
         </button>

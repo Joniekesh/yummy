@@ -25,6 +25,7 @@ const UserSchema = new Schema(
       type: String,
       enum: ["email", "google"],
       default: "email",
+      required: true,
     },
     role: {
       type: String,

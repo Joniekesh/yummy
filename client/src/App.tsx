@@ -251,7 +251,11 @@ const App = () => {
     bg-red-50
      overflow-y-auto overflow-x-hidden"
     >
-      <Toaster className="9999999999" position="top-right" richColors />
+      <Toaster
+        className="9999999999999999999"
+        position="top-right"
+        richColors
+      />
       <RouterProvider router={router} />
     </div>
   );

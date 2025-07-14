@@ -10,6 +10,7 @@ import Menu from "./Menu";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import Cart from "./Cart";
 import { logout } from "../redux/actions/authActiontem";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -22,57 +23,53 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="w-full h-15 px-4 flex items-center justify-between text-[20px] fixed top-0 left-0 z-900 bg-red-300">
+    <div className="w-full h-[70px] px-4 md:px-10 flex items-center justify-between text-[18px] fixed top-0 left-0 z-[9999999] bg-[#161618] text-white">
       {open && <Menu setOpen={setOpen} setOpenCart={setOpenCart} />}
       {openCart && <Cart setOpenCart={setOpenCart} />}
 
-      <Link
-        to="/"
-        className="py-1 px-2 font-bold rounded-sm bg-red-500 text-white"
-      >
-        Yummy Kitchen
-      </Link>
+      <Logo />
+      <div className="hidden md:flex items-center gap-10 text-lg cursor-pointer">
+        {links.map((link: INavLink) => (
+          <LinkItem key={link.id} link={link} />
+        ))}
+      </div>
       <div className="flex items-center gap-2">
-        <div className="hidden sm:flex items-center gap-2 text-lg cursor-pointer">
-          {links.map((link: INavLink) => (
-            <LinkItem key={link.id} link={link} />
-          ))}
-          <div
-            onClick={() => setOpenCart((prev) => !prev)}
-            className="relative"
-          >
-            <FaCartPlus className="mx-5" />
-            <span className="absolute top-[-10px] right-[12px] flex items-center justify-center h-[16px] w-[16px] rounded-full bg-red-500 text-[12px] text-white">
-              {quantity}
-            </span>
-          </div>
+        <div
+          onClick={() => setOpenCart((prev) => !prev)}
+          className="relative  cursor-pointer"
+        >
+          <FaCartPlus className="mx-5" />
+          <span className="absolute top-[-10px] right-[12px] flex items-center justify-center h-[16px] w-[16px] rounded-full bg-[#D99703] text-[12px] text-black">
+            {quantity}
+          </span>
+        </div>
+        <div className="hidden md:flex">
           {user ? (
             <div className="flex items-center justify-center gap-[10px]">
-              <Link
-                to={`/${user.role}`}
-                className="py-1 px-2 rounded-sm bg-red-500 text-white"
-              >
-                Dashboard
+              <Link to={`/${user.role}`} className="">
+                <img
+                  className="w-[36px] h-[36px] rounded-full object-cover"
+                  src="/avatar.jpg"
+                  alt=""
+                />
               </Link>
 
               <div
                 onClick={() => dispatch(logout())}
-                className="py-1 px-2 rounded-sm bg-red-500 text-white"
+                className="cursor-pointer"
               >
                 Logout
               </div>
             </div>
           ) : (
-            <Link
-              to="/auth"
-              className="py-1 px-2 rounded-sm bg-red-500 text-white"
-            >
+            <Link to="/auth" className="hover:text-[#F8BA05]">
               Sign In
             </Link>
           )}
         </div>
+
         <div
-          className="flex items-center sm:hidden cursor-pointer text-[30px] z-[9999999]"
+          className="flex items-center md:hidden cursor-pointer text-[30px] z-[9999999]"
           onClick={() => {
             setOpen((prev) => !prev);
             setOpenCart(false);

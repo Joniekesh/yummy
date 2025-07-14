@@ -2,7 +2,7 @@ import Countdown from "react-countdown";
 
 const CountDown = () => {
   return (
-    <div className="flex-col w-full py-4 px-4 sm:px-10 bg-black text-white flex sm:flex-row items-center justify-center gap-4">
+    <div className="flex-col w-full py-4 px-4 md:px-10 bg-black text-white flex sm:flex-row items-center justify-center gap-4">
       <div className="flex flex-col gap-4">
         <div className="text-[30px] font-bold">
           Delicious Burger and French Fry

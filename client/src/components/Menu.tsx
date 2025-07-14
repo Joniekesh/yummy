@@ -19,7 +19,7 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
 
   return (
     <div className="fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-999999 w-full h-full">
-      <div className="sm:hidden  fixed top-0 right-0 w-[70vw] flex flex-col gap-5 items-center justify-center bg-red-500 h-[100vh] text-white">
+      <div className="md:hidden  fixed top-0 right-0 w-[70vw] flex flex-col gap-5 items-center justify-center bg-red-500 h-[100vh] text-white">
         {links.map((link) => (
           <Link
             key={link.id}

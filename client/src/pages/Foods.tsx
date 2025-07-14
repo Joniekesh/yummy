@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import makeRequest from "../utils/makeRequest";
 import type { ICategory } from "../interfaces";
 import { useState } from "react";
+import OurChefs from "../components/OurChefs";
 
 const Foods = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +33,7 @@ const Foods = () => {
   });
 
   return (
-    <>
+    <div className="min-h-[100vh]">
       {isLoading ? (
         <div className="flex text-center h-[100vh] items-center justify-center text-[36px] opacity-[0.3]">
           Loading...
@@ -71,10 +72,11 @@ const Foods = () => {
               )}
             </div>
           </div>
-          <CountDown />
         </div>
       )}
-    </>
+      <CountDown />
+      <OurChefs />
+    </div>
   );
 };
 

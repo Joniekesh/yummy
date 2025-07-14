@@ -34,7 +34,7 @@ const Category = () => {
   });
 
   return (
-    <div className="w-full mt-25 flex flex-col gap-5">
+    <div className="w-full mt-25 mb-10 flex flex-col gap-5">
       {isLoading ? (
         <div className="flex text-center h-[100vh] items-center justify-center text-[36px] opacity-[0.3]">
           Loading...
@@ -51,7 +51,7 @@ const Category = () => {
               {products.map((item: IProduct) => (
                 <Link
                   to={`/foods/${item._id}`}
-                  className="w-full h-[350px] ring ring-red-200 p-3 rounded-2xl shadow-2xl cursor-pointer"
+                  className="w-full h-[350px] bg-white p-3 rounded-2xl shadow-2xl cursor-pointer"
                   key={item._id}
                 >
                   <img

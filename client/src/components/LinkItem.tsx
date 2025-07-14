@@ -12,7 +12,9 @@ const Linkitem = ({ link }: Props) => {
   return (
     <Link
       to={link.url}
-      className={`${link.url === active ? "text-red-500" : ""}`}
+      className={`${
+        link.url === active ? "text-[#F8BA05]" : ""
+      } hover:text-[#F8BA05]`}
     >
       {link.name}
     </Link>
