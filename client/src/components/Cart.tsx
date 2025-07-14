@@ -54,7 +54,7 @@ const Cart = ({ setOpenCart }: Props) => {
   };
 
   return (
-    <div className="absolute flex flex-col gap-2 right-0 top-15 h-[90vh] overflow-y-auto w-[90vw] sm:w-[50vw] bg-white p-[10px] shadow-md text-base">
+    <div className="absolute flex flex-col gap-2 right-0 top-17 h-[90vh] overflow-y-auto w-[90vw] sm:w-[50vw] bg-white p-[10px] shadow-md text-base">
       <div>
         {products.length < 1 ? (
           <div className="flex items-center justify-center flex-col gap-10 opacity-[0.5]">
@@ -85,10 +85,10 @@ const Cart = ({ setOpenCart }: Props) => {
                   />
                 </div>
 
-                <div>{product.name}</div>
+                <div className="text-red-500">{product.name}</div>
               </div>
               <div className="flex items-center justify-between mr-0">
-                <span>{product.qty}</span>x
+                <span className="text-red-500">{product.qty}x</span>
                 <span className="text-red-400">
                   ${product.price.toFixed(2)}
                 </span>

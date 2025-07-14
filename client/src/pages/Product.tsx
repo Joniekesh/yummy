@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import CountDown from "../components/CountDown";
 import { useState } from "react";
-import type { IProduct } from "../interfaces";
+import type { IOption, IProduct } from "../interfaces";
 import { useQuery } from "@tanstack/react-query";
 import makeRequest from "../utils/makeRequest";
 import { useAppDispatch } from "../redux/hooks";
@@ -12,10 +12,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const { id } = useParams<{ id: string }>();
   const [errorMessage, setErrorMessage] = useState("");
-  const [option, setOption] = useState({
-    name: "",
-    price: "",
-  });
+  const [selectedOption, setSelectedOption] = useState<IOption>();
 
   const dispatch = useAppDispatch();
 
@@ -51,7 +48,8 @@ const Product = () => {
         name: product.name,
         desc: product.desc,
         image: product.image,
-        price: product.price,
+        price: (product.price ?? 0) + (selectedOption?.price ?? 0),
+        size: selectedOption?.name,
         qty: quantity,
       })
     );
@@ -60,7 +58,7 @@ const Product = () => {
   };
 
   return (
-    <div className="w-full h-[max-content] flex items-center justify-center flex-col gap-5">
+    <div className="w-full h-[max-content]  flex items-center justify-center flex-col gap-5">
       {isLoading ? (
         <div className="flex text-center h-[100vh] items-center justify-center text-[36px] opacity-[0.3]">
           Loading...
@@ -71,7 +69,7 @@ const Product = () => {
         </div>
       ) : (
         <div className="flex w-full flex-col gap-10 mt-20 min-h-[70vh]">
-          <div className="flex justify-between items-center flex-col sm:flex-row sm:gap-20 gap-5">
+          <div className="flex px-4 md:px-8 justify-between items-center flex-col sm:flex-row sm:gap-20 gap-5">
             <div className="h-[200px] w-[200px] sm:h-[400px] sm:w-[400px]">
               <img
                 className="w-full h-full rounded-full object-cover"
@@ -79,13 +77,32 @@ const Product = () => {
                 alt={product?.name}
               />
             </div>
-            <div className="h-1/2 gap-4 sm:gap-10 flex flex-col items-center justify-center sm:items-start">
+            <div className="h-1/2 gap-4 flex flex-col items-center justify-center sm:items-start">
               <div className="uppercase text-center font-bold text-[30px]">
                 {product?.name}
               </div>
               <div>{product?.desc}</div>
+              {product?.options && (
+                <div className="flex items-center gap-3">
+                  {product?.options?.map((option) => (
+                    <span
+                      key={option._id}
+                      onClick={() => setSelectedOption(option)}
+                      className={`${
+                        selectedOption === option && "bg-red-500 text-white"
+                      } p-1 w-[70px] ring-1 ring-red-500 rounded-[5px] cursor-pointer flex items-center justify-center`}
+                    >
+                      {option?.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               <div className="text-[30px] text-red-500 font-bold">
-                ${product?.price.toFixed(2)}
+                $
+                {((product?.price ?? 0) + (selectedOption?.price ?? 0)).toFixed(
+                  2
+                )}
               </div>
               <div className="flex items-center w-full h-[45px] pl-2 ring-2 ring-red-300 rounded-[8px] gap-2">
                 <div className="flex items-center gap-2 text-[20px]">

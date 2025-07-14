@@ -32,6 +32,12 @@ export interface ICategory {
   user?: string;
 }
 
+export interface IOption {
+  _id: string;
+  name: string;
+  price: number;
+}
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -39,6 +45,7 @@ export interface IProduct {
   image: string;
   category: string;
   price: number;
+  options: IOption[];
   createdAt?: string;
 }
 
@@ -48,5 +55,6 @@ export interface ICartProduct {
   desc: string;
   image: string;
   price: number;
+  size?: string;
   qty: number;
 }

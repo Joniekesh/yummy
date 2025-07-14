@@ -32,6 +32,9 @@ const OrderSchema = new Schema(
           type: Number,
           required: true,
         },
+        size: {
+          type: String,
+        },
       },
     ],
     totalPrice: {
