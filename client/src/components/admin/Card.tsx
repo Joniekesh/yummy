@@ -14,10 +14,10 @@ const Card = ({ name, url, sales, icon, currency }: Props) => {
   return (
     <Link
       to={url}
-      className="ring group ring-red-400 rounded-lg p-2 h-[100px] flex flex-col justify-between hover:bg-red-500 hover:text-white"
+      className="ring group ring-[orange] rounded-lg p-2 h-[100px] flex flex-col justify-between hover:bg-[orange] hover:text-white"
     >
       <div className="flex items-center justify-between">
-        <div className="text-[30px] text-red-500 font-bold group-hover:text-white">
+        <div className="text-[30px] text-[orange] font-bold group-hover:text-white">
           {React.createElement(icon)}
         </div>
         <div className="text-[20px]">{name}</div>

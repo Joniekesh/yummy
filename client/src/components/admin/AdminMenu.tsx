@@ -21,7 +21,7 @@ const AdminMenu = () => {
   return (
     <div
       // style={{ width: "30px" }}
-      className="flex-0.5 h-screen overflow-y-auto bg-red-500 text-white p-4"
+      className="flex-0.5 h-screen overflow-y-auto bg-[#161618] text-white text-white p-4"
     >
       <div className="sticky top-0">
         <Link to="/">Home</Link>
@@ -34,8 +34,8 @@ const AdminMenu = () => {
                   className={`flex items-center gap-[10px] rounded-[5px] p-3 text-[16px] cursor-pointer transform transition duration-200 ease-in-out
                   ${
                     isActive
-                      ? "bg-red-400 ring"
-                      : "hover:bg-red-400 hover:scale-[1.01]"
+                      ? "bg-[orange] ring"
+                      : "hover:bg-[orange] hover:scale-[1.01]"
                   }`}
                 >
                   <div className="">{<link.icon />}</div>

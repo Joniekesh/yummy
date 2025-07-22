@@ -119,7 +119,7 @@ const Features = () => {
                   <span className="text-lg font-bold">{product.name}</span>
                   <span className="text-sm">{product.desc}</span>
                   <p className="text-sm text-gray-600 font-bold text-[20px]">
-                    ₦{product.price.toFixed(2)}
+                    ${product.price.toFixed(2)}
                   </p>
                 </div>
                 <button className="px-4 py-2 text-sm rounded-3xl bg-[#D99703] text-black font-medium transition">

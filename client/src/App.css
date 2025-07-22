@@ -223,9 +223,9 @@ td {
 }
 
 @media only screen and (max-width: 600px) {
-  form,
+  .form,
   #payment-status {
-    width: 80vw;
-    min-width: initial;
+    width: 100vw;
+    min-width: 400px;
   }
 }

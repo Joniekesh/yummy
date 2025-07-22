@@ -80,7 +80,7 @@ const MyOrder = () => {
         desc: product.desc,
         qty: product.qty,
         price: (
-          <div className="font-medium text-red-400">
+          <div className="font-medium text-[orange]">
             {product.price.toFixed(2)}
           </div>
         ),
@@ -107,7 +107,7 @@ const MyOrder = () => {
                 className={`${
                   order?.status === "delivered"
                     ? "text-green-500"
-                    : "text-red-300"
+                    : ""
                 } capitalize font-bold`}
               >
                 {order._id}
@@ -135,7 +135,7 @@ const MyOrder = () => {
                 className={`${
                   order.status === "delivered"
                     ? "text-green-500"
-                    : "text-red-400"
+                    : "text-[orange]"
                 } font-medium`}
               >
                 $ {order.totalPrice.toFixed(2)}

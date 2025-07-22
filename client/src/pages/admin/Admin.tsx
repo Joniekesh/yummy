@@ -165,7 +165,7 @@ const Admin = () => {
               ? "text-amber-300"
               : order?.status === "delivered"
               ? "text-green-500"
-              : "text-red-500"
+              : "text-[orange]"
           }`}
         >
           {order?.status}
@@ -177,7 +177,7 @@ const Admin = () => {
         <div className="flex items-center gap-2">
           <div
             onClick={() => navigate(`/admin/orders/${order._id}`)}
-            className="text-sm p-1 text-red-500 cursor-pointer  rounded-[3px]"
+            className="text-sm p-1 text-[orange] cursor-pointer  rounded-[3px]"
           >
             View
           </div>

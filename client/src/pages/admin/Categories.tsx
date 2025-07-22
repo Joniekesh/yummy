@@ -124,7 +124,7 @@ const Categories = () => {
           <div className="flex items-center gap-2">
             <div
               onClick={() => navigate(`/admin/categories/${category._id}`)}
-              className="text-sm p-1 text-red-500 cursor-pointer  rounded-[3px]"
+              className="text-sm p-1 text-[orange] cursor-pointer  rounded-[3px]"
             >
               View
             </div>
@@ -146,7 +146,7 @@ const Categories = () => {
         <div>Categories</div>
         <div
           onClick={() => setOpen((prev) => !prev)}
-          className="flex itemc justify-center p-1 ring ring-red-300 cursor-pointer text-red-500 rounded-[5px] w-[100px]"
+          className="flex itemc justify-center p-1 ring ring-[orange] cursor-pointer text-[orange] rounded-[5px] w-[100px]"
         >
           Create
         </div>

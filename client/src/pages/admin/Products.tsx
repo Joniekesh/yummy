@@ -132,7 +132,7 @@ const Products = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigate(`/admin/products/${product._id}`)}
-            className="text-sm p-1 text-red-500 cursor-pointer  rounded-[3px]"
+            className="text-sm p-1 text-[orange] cursor-pointer  rounded-[3px]"
           >
             View
           </button>
@@ -152,7 +152,7 @@ const Products = () => {
         <div>Products</div>
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className="p-1 ring ring-red-300 cursor-pointer text-red-500 rounded-[5px] w-[100px]"
+          className="p-1 ring ring-[orange] cursor-pointer text-[orange] rounded-[5px] w-[100px]"
         >
           Create
         </button>

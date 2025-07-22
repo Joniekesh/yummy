@@ -133,7 +133,7 @@ const Auth = () => {
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-[#D99703]">
       <div className="bg-white p-6 rounded-lg shadow w-[90%] max-w-md">
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center item-center mb-4">
           <Logo />
         </div>
 

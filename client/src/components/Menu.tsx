@@ -19,13 +19,13 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
 
   return (
     <div className="fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-999999 w-full h-full">
-      <div className="md:hidden  fixed top-0 right-0 w-[70vw] flex flex-col gap-5 items-center justify-center bg-red-500 h-[100vh] text-white">
+      <div className="md:hidden  fixed top-0 right-0 w-[70vw] flex flex-col gap-5 items-center justify-center bg-[#161618] text-white h-[100vh] text-white">
         {links.map((link) => (
           <Link
             key={link.id}
             onClick={() => setOpen((prev) => !prev)}
             to={link.url}
-            className="cursor-pointer px-2 py-1 rounded-[5px] w-[200px] text-center transform transition duration-500 ease-in-out hover:bg-red-400 hover:scale-[1.01]"
+            className="cursor-pointer px-2 py-1 rounded-[5px] w-[200px] text-center transform transition duration-500 ease-in-out hover:bg-[orange] hover:scale-[1.01]"
           >
             {link.name}
           </Link>
@@ -37,7 +37,7 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
             setOpen(false);
           }}
           className="relative flex items-center justify-center
-           ring-white rounded-[5px] px-2 py-1 w-[max-content] h-[40px] text-center cursor-pointer transform transition duration-200 ease-in-out bg-red-400  hover:scale-[1.01]"
+           ring-white rounded-[5px] px-2 py-1 w-[max-content] h-[40px] text-center cursor-pointer transform transition duration-200 ease-in-out bg-[orange]  hover:scale-[1.01]"
         >
           <FaCartPlus className="mx-5" />
           <span className="absolute bg-red-600 h-[16px] w-[16px] rounded-full text-white top-[5px] right-[20px] flex items-center justify-center text-center text-[12px]">
@@ -49,13 +49,13 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
           <div className="flex flex-col gap-[10px]">
             <Link
               to={`/${user.role}`}
-              className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-red-400  hover:scale-[1.01]"
+              className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-[orange]  hover:scale-[1.01]"
             >
               Dashboard
             </Link>
 
             <div
-              className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-red-400  hover:scale-[1.01]"
+              className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-[orange]  hover:scale-[1.01]"
               onClick={() => dispatch(logout())}
             >
               Logout
@@ -64,7 +64,7 @@ const Menu = ({ setOpen, setOpenCart }: Props) => {
         ) : (
           <Link
             to="/auth"
-            className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-red-400  hover:scale-[1.01]"
+            className="ring ring-white rounded-[5px] px-2 py-1 w-[200px] text-center cursor-pointer transform transition duration-200 ease-in-out hover:bg-[orange]  hover:scale-[1.01]"
           >
             sign in
           </Link>

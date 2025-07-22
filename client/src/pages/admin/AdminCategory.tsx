@@ -97,7 +97,7 @@ const AdminCategory = () => {
         </div>
       ) : (
         <div className="flex flex-col md:flex-row md:justify-between gap-5">
-          <div className="flex h-[max-content] flex-col ring-2 ring-red-300 p-4 rounded-xl">
+          <div className="flex h-[max-content] flex-col ring-1 ring-[orange] p-4 rounded-xl">
             <h1 className="text-2xl font-bold">Category Details</h1>
             <div className="flex flex-col gap-4 mt-3">
               <img
@@ -117,13 +117,13 @@ const AdminCategory = () => {
             </div>
           </div>
 
-          <div className="flex flex-col ring-2 ring-red-300 p-4 rounded-xl w-full md:max-w-md">
+          <div className="flex flex-col ring-1 ring-[orange] p-4 rounded-xl w-full md:max-w-md">
             <h1 className="text-2xl font-bold">Edit Category</h1>
             <form onSubmit={handleUpdate} className="flex flex-col gap-4 mt-3">
               <div>
                 <label className="block mb-1">Name</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -132,7 +132,7 @@ const AdminCategory = () => {
               <div>
                 <label className="block mb-1">Description</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                 />
@@ -163,12 +163,12 @@ const AdminCategory = () => {
               <button
                 type="submit"
                 disabled={mutation.isPending}
-                className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 cursor-pointer"
+                className="bg-[#161618] text-white rounded px-4 py-2 hover:bg-[orange] cursor-pointer"
               >
                 {mutation.isPending ? "Updating..." : "Update"}
               </button>
               {mutation.isError && (
-                <p className="text-red-600 mt-2">{errorMessage}</p>
+                <p className="text-[orange] mt-2">{errorMessage}</p>
               )}
             </form>
           </div>

@@ -45,7 +45,7 @@ const Foods = () => {
       ) : (
         <div className="w-full mt-25 flex flex-col gap-5">
           <div className="flex flex-col gap-4 px-4">
-            <div className="text-3xl text-red-500">Yummy Categories</div>
+            <div className="text-3xl mb-3">Yummy Categories</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {Array.isArray(categories) ? (
                 categories.map((cat: ICategory) => (

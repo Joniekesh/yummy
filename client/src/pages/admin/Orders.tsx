@@ -133,7 +133,7 @@ const Orders = () => {
               ? "text-amber-300"
               : order.status === "delivered"
               ? "text-green-500"
-              : "text-red-500"
+              : "text-[orange]"
           }`}
         >
           {order.status}
@@ -145,7 +145,7 @@ const Orders = () => {
         <div className="flex items-center gap-2">
           <div
             onClick={() => navigate(`/admin/orders/${order._id}`)}
-            className="text-sm p-1 text-red-500 cursor-pointer  rounded-[3px]"
+            className="text-sm p-1 text-[orange] cursor-pointer  rounded-[3px]"
           >
             View
           </div>
@@ -162,7 +162,7 @@ const Orders = () => {
     <div className="flex-8 p-5 flex flex-col gap-10">
       <div className="flex items-center justify-between text-[20px]">
         <div>Orders</div>
-        <div className="p-1 ring ring-red-300 cursor-pointer text-red-500 rounded-[5px] w-[100px]">
+        <div className="p-1 text-center ring ring-[orange] cursor-pointer text-[orange] rounded-[5px] w-[100px]">
           Create
         </div>
       </div>

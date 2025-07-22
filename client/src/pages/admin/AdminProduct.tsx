@@ -132,7 +132,7 @@ const AdminProduct = () => {
         </div>
       ) : (
         <div className="flex flex-col md:flex-row md:justify-between gap-5">
-          <div className="flex flex-col ring-2 ring-red-300 p-4 rounded-xl h-[max-content]">
+          <div className="flex flex-col ring-1 ring-[orange] p-4 rounded-xl h-[max-content]">
             <h1 className="text-2xl font-bold">Product Details</h1>
             <div className="flex flex-col gap-4 mt-3">
               <img
@@ -159,13 +159,13 @@ const AdminProduct = () => {
             </div>
           </div>
 
-          <div className="flex flex-col ring-2 ring-red-300 p-4 rounded-xl w-full md:max-w-md">
+          <div className="flex flex-col ring-1 ring-[orange] p-4 rounded-xl w-full md:max-w-md">
             <h1 className="text-2xl font-bold">Edit Product</h1>
             <form onSubmit={handleUpdate} className="flex flex-col gap-4 mt-3">
               <div>
                 <label className="block mb-1">Category</label>
                 <select
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
@@ -177,7 +177,7 @@ const AdminProduct = () => {
               <div>
                 <label className="block mb-1">Name</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -186,7 +186,7 @@ const AdminProduct = () => {
               <div>
                 <label className="block mb-1">Description</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                 />
@@ -195,7 +195,7 @@ const AdminProduct = () => {
               <div>
                 <label className="block mb-1">price</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -226,7 +226,7 @@ const AdminProduct = () => {
               <button
                 type="submit"
                 disabled={mutation.isPending}
-                className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 cursor-pointer"
+                className="bg-[#161618] text-white rounded px-4 py-2 hover:bg-[orange] cursor-pointer"
               >
                 {mutation.isPending ? "Updating..." : "Update"}
               </button>

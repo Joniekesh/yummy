@@ -89,7 +89,7 @@ const AdminOrder = () => {
         desc: product.desc,
         qty: product.qty,
         price: (
-          <div className="font-medium text-red-400">
+          <div className="font-medium text-[orange]">
             {product.price.toFixed(2)}
           </div>
         ),
@@ -145,7 +145,7 @@ const AdminOrder = () => {
         </div>
       ) : (
         <div className="p-2 m-5 flex flex-col gap-3">
-          <div className="flex flex-col md:flex-row md:justify-between gap-6 ring-2 ring-red-300 rounded-[10px] p-[10px]">
+          <div className="flex flex-col md:flex-row md:justify-between gap-6 ring-1 ring-[orange] rounded-[10px] p-[10px]">
             <div className="flex flex-col gap-2 ">
               <h1 className="text-bold text-[30px]">Order Details</h1>
 
@@ -155,7 +155,7 @@ const AdminOrder = () => {
                   className={`${
                     order?.status === "delivered"
                       ? "text-green-500"
-                      : "text-red-300"
+                      : ""
                   } capitalize font-bold`}
                 >
                   {order._id}
@@ -171,7 +171,7 @@ const AdminOrder = () => {
                       ? "text-amber-300"
                       : order?.status === "delivered"
                       ? "text-green-500"
-                      : "text-red-500"
+                      : "text-[orange]"
                   } capitalize`}
                 >
                   {order.status}
@@ -183,7 +183,7 @@ const AdminOrder = () => {
                   className={`${
                     order.status === "delivered"
                       ? "text-green-500"
-                      : "text-red-400"
+                      : "text-[orange]"
                   } font-medium`}
                 >
                   $ {order.totalPrice.toFixed(2)}
@@ -196,7 +196,7 @@ const AdminOrder = () => {
                   <select
                     value={status || order.status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="w-full ring-1 cursor-pointer ring-[#ddd] p-[5px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300 text-[16px]"
+                    className="w-full ring-1 cursor-pointer ring-[#ddd] p-[5px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange] text-[16px]"
                   >
                     <option value="pending">Pending</option>
                     <option value="preparing">Being prepared</option>
@@ -208,7 +208,7 @@ const AdminOrder = () => {
 
                   <button
                     type="submit"
-                    className="bg-red-500 cursor-pointer text-white rounded px-4 py-2 hover:bg-red-600 w-max text-sm"
+                    className="bg-[#161618] text-white cursor-pointer text-white rounded px-4 py-2 hover:bg-[orange] w-max text-sm"
                     disabled={mutation.isPending || status === order.status}
                   >
                     {mutation.isPending ? "Updating..." : "Update Status"}

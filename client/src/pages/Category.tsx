@@ -61,7 +61,7 @@ const Category = () => {
                   />
                   <div className="flex items-center justify-between gap-4 h-[20%]">
                     <div>{item.name}</div>
-                    <div className="text-red-500 font-bold text-[26px]">
+                    <div className="text-[orange] font-bold text-[26px]">
                       ${item.price.toFixed(2)}
                     </div>
                   </div>

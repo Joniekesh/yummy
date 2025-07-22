@@ -54,7 +54,7 @@ const Cart = ({ setOpenCart }: Props) => {
   };
 
   return (
-    <div className="absolute flex flex-col gap-2 right-0 top-17 h-[90vh] overflow-y-auto w-[90vw] sm:w-[50vw] bg-white p-[10px] shadow-md text-base">
+    <div className="absolute flex flex-col gap-2 right-0 top-17 h-[90vh] overflow-y-auto w-[90vw] sm:w-[50vw] bg-white text-[#333] p-[10px] shadow-md text-base">
       <div>
         {products.length < 1 ? (
           <div className="flex items-center justify-center flex-col gap-10 opacity-[0.5]">
@@ -71,7 +71,7 @@ const Cart = ({ setOpenCart }: Props) => {
             </div>
           </div>
         ) : (
-          products.map((product) => (
+          products.map((product: any) => (
             <div
               key={product._id}
               className="grid grid-cols-2 items-center my-[20px] w-full gap-20"
@@ -85,15 +85,20 @@ const Cart = ({ setOpenCart }: Props) => {
                   />
                 </div>
 
-                <div className="text-red-500">{product.name}</div>
+                <div className="text-[#333] flex flex-col">
+                 <span>
+                  {product.name}
+                  </span> 
+                  <span className='text-sm'>
+                  {product.size}
+                  </span>
+                  </div>
               </div>
               <div className="flex items-center justify-between mr-0">
-                <span className="text-red-500">{product.qty}x</span>
-                <span className="text-red-400">
-                  ${product.price.toFixed(2)}
-                </span>
+                <span>{product.qty}x</span>
+                <span>${product.price.toFixed(2)}</span>
                 <IoIosCloseCircleOutline
-                  className="cursor-pointer text-[24px] text-red-600"
+                  className="cursor-pointer text-[24px] text-[crimson]"
                   onClick={() => {
                     dispatch(removeFromToCart(product._id));
                     toast.success("Cart item removed.");
@@ -105,17 +110,17 @@ const Cart = ({ setOpenCart }: Props) => {
         )}
       </div>
       <div className="flex flex-col gap-5 bg-red-50 p-[10px] rounded-[5px]">
-        <div className="flex items-center justify-between text-red-500">
+        <div className="flex items-center justify-between ">
           <span>Subtotal ({quantity} Items)</span>
-          <span className="text-red-500 text-[20px] font-[500]">
+          <span className=" text-[20px] font-[500]">
             ${totalPrice.toFixed(2)}
           </span>
         </div>
-        <div className="flex items-center justify-between text-red-500">
+        <div className="flex items-center justify-between ">
           <span>Service Cost</span>
           <span className="text-[20px] font-[500]">$0.00</span>
         </div>
-        <div className="flex items-center justify-between text-red-500">
+        <div className="flex items-center justify-between ">
           <span>Delivery Cost</span>
           <span className="uppercase text-green-500">free</span>
         </div>
@@ -127,13 +132,13 @@ const Cart = ({ setOpenCart }: Props) => {
                 toast.success("Cart items cleared.");
                 setOpenCart((prev) => !prev);
               }}
-              className="uppercase py-[8px] px-[20px] my-[20px] rounded-[5px] ring-2 ring-red-3 text-red-500 cursor-pointer"
+              className="uppercase py-[8px] px-[20px] my-[20px] rounded-[5px] ring-2 ring-red-3  cursor-pointer"
             >
               clear cart
             </div>
             <div
               onClick={handleCheckout}
-              className="py-[8px] px-[20px] my-[20px] rounded-[5px] bg-red-500 text-white cursor-pointer"
+              className="py-[8px] px-[20px] my-[20px] rounded-[5px] bg-[#F8BA05] text-white cursor-pointer"
             >
               {loading ? "Checking out..." : "Checkout"}
             </div>

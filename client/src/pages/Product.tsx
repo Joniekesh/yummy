@@ -89,8 +89,8 @@ const Product = () => {
                       key={option._id}
                       onClick={() => setSelectedOption(option)}
                       className={`${
-                        selectedOption === option && "bg-red-500 text-white"
-                      } p-1 w-[70px] ring-1 ring-red-500 rounded-[5px] cursor-pointer flex items-center justify-center`}
+                        selectedOption === option && "bg-[orange] text-white"
+                      } p-1 w-[70px] ring-1 ring-[orange] rounded-[5px] cursor-pointer flex items-center justify-center`}
                     >
                       {option?.name}
                     </span>
@@ -98,13 +98,13 @@ const Product = () => {
                 </div>
               )}
 
-              <div className="text-[30px] text-red-500 font-bold">
+              <div className="text-[30px] text-[orange] font-bold">
                 $
                 {((product?.price ?? 0) + (selectedOption?.price ?? 0)).toFixed(
                   2
                 )}
               </div>
-              <div className="flex items-center w-full h-[45px] pl-2 ring-2 ring-red-300 rounded-[8px] gap-2">
+              <div className="flex items-center w-full h-[45px] pl-2 ring-2 ring-[orange] rounded-[8px] gap-2">
                 <div className="flex items-center gap-2 text-[20px]">
                   <div
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -128,7 +128,7 @@ const Product = () => {
 
                 <div
                   onClick={handleAddToCart}
-                  className="ml-auto flex items-center justify-center h-full px-4 bg-red-500 uppercase rounded-[8px] text-white text-sm font-semibold cursor-pointer"
+                  className="ml-auto flex items-center justify-center h-full px-4 bg-[orange] uppercase rounded-[8px] text-white text-sm font-semibold cursor-pointer"
                 >
                   Add to Cart
                 </div>

@@ -96,7 +96,7 @@ const AdminUser = () => {
         </div>
       ) : (
         <div className="flex flex-col md:flex-row md:justify-between gap-5">
-          <div className="flex flex-col ring-2 ring-red-300 p-4 rounded-xl h-[max-content]">
+          <div className="flex flex-col ring-1 ring-[orange] p-4 rounded-xl h-[max-content]">
             <h1 className="text-2xl font-bold">User Details</h1>
             <div className="flex flex-col gap-4 mt-3">
               <img
@@ -125,13 +125,13 @@ const AdminUser = () => {
             </div>
           </div>
 
-          <div className="flex flex-col ring-2 h-[max-content] ring-red-300 p-4 rounded-xl w-full md:max-w-md">
+          <div className="flex flex-col ring-1 h-[max-content] ring-[orange] p-4 rounded-xl w-full md:max-w-md">
             <h1 className="text-2xl font-bold">Edit User</h1>
             <form onSubmit={handleUpdate} className="flex flex-col gap-4 mt-3">
               <div>
                 <label className="block mb-1">Name</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
@@ -140,7 +140,7 @@ const AdminUser = () => {
               <div>
                 <label className="block mb-1">Email</label>
                 <input
-                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -149,7 +149,7 @@ const AdminUser = () => {
               <div>
                 <label className="block mb-1">Role</label>
                 <select
-                  className="w-full cursor-pointer ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-red-300"
+                  className="w-full cursor-pointer ring-1 ring-[#ddd] p-[10px] rounded-[5px] outline-0 focus:ring-2 focus:ring-[orange]"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                 >
@@ -161,7 +161,7 @@ const AdminUser = () => {
               <button
                 type="submit"
                 disabled={mutation.isPending}
-                className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 cursor-pointer"
+                className="bg-[#161618] text-white rounded px-4 py-2 hover:bg-[orange] cursor-pointer"
               >
                 {mutation.isPending ? "Updating..." : "Update"}
               </button>
